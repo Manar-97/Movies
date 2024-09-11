@@ -3,18 +3,19 @@ import 'package:movies/data/api_manager.dart';
 import 'package:movies/data/local_storage.dart';
 import 'package:movies/data/models/movie_datails/movie_details.dart';
 import 'package:movies/data/models/movie_datails/result_model.dart';
-import 'package:movies/data/repositories/data_sources/recommended_ds.dart';
+import 'package:movies/data/repositories/data_sources/similar_ds.dart';
 
-@Injectable(as: RecommendedDS)
-class RecommendedDSImpl extends RecommendedDS {
+@Injectable(as: SimilarDS)
+class SimilarDSImpl extends SimilarDS {
   ApiManager apiManager;
   LocalStorage storage;
-  RecommendedDSImpl(this.apiManager,this.storage);
 
-  @override
-  Future<MovieDetails> getRecommended() async {
-    MovieDetails recommended = await apiManager.getRecommended();
-    return recommended;
+  @factoryMethod
+  SimilarDSImpl(this.apiManager, this.storage);
+
+  Future<MovieDetails> getSimilar(num id) async {
+    MovieDetails similar = await apiManager.getSimilarMovie(id);
+    return similar;
   }
 
   @override

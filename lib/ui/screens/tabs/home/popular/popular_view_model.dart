@@ -1,31 +1,37 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/data/api_manager.dart';
+import 'package:injectable/injectable.dart';
 import 'package:movies/data/models/movie_datails/movie_details.dart';
+import 'package:movies/data/models/movie_datails/result_model.dart';
 import 'package:movies/data/repositories/repo/popular_repositories.dart';
-import 'package:movies/ui/base/base.dart';
 
-class PopularViewModel extends Cubit<PopularViewModelState>{
+@injectable
+class PopularViewModel extends Cubit<PopularState> {
   PopularRepositories popularRepositories;
 
-  BaseApiState popularApiState = BaseLoadingState();
-  PopularViewModel(this.popularRepositories) :super(PopularViewModelState.initial());
+  @factoryMethod
+  PopularViewModel(this.popularRepositories) : super(Loading());
 
-  void getPopular()async{
+  void getPopularMovies() async {
     try {
-      emit(PopularViewModelState(BaseLoadingState()));
       MovieDetails popular = await popularRepositories.getPopular();
-      emit(PopularViewModelState(BaseSuccessState(popular.results)));
+      emit(Success(popular.results ?? []));
     } catch (e) {
-      emit(PopularViewModelState(BaseErrorState(e.toString())));
+      emit(Error(e.toString()));
     }
   }
 }
 
-class PopularViewModelState {
-  late BaseApiState popularApiState;
+abstract class PopularState {}
 
-  PopularViewModelState(this.popularApiState);
-  PopularViewModelState.initial(){
-    popularApiState = BaseLoadingState();
-  }
+class Success extends PopularState {
+  List<Result> movie;
+
+  Success(this.movie);
+}
+
+class Loading extends PopularState {}
+
+class Error extends PopularState {
+  String error;
+  Error(this.error);
 }

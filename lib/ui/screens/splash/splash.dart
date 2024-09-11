@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies/ui/screens/tabs/home/home.dart';
+import 'package:movies/ui/screens/my_home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -12,8 +12,8 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3),(){
-      Navigator.pushNamed(context, Home.routeName);
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, MyHome.routeName);
     });
     return Image.asset("assets/splash.png");
   }

@@ -23,9 +23,12 @@ class _MyHomeState extends State<MyHome> {
       Browse(),
       WatchList(),
     ];
-    return Scaffold(
-      body: tabs[currentIndex],
-      bottomNavigationBar: buildBottomNavigationBar(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: tabs[currentIndex],
+        bottomNavigationBar: buildBottomNavigationBar(),
+      ),
     );
   }
 
@@ -36,8 +39,9 @@ class _MyHomeState extends State<MyHome> {
       unselectedItemColor: AppColors.unSelectedItem,
       currentIndex: currentIndex,
       onTap: (index) {
-        currentIndex = index;
-        setState(() {});
+        setState(() {
+          currentIndex = index;
+        });
       },
       items: const [
         BottomNavigationBarItem(

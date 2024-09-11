@@ -1,4 +1,4 @@
-class Results {
+class Result {
   bool? adult;
   String? backdropPath;
   List<num>? genreIds;
@@ -14,7 +14,7 @@ class Results {
   num? voteAverage;
   num? voteCount;
 
-  Results(
+  Result(
       {this.adult,
         this.backdropPath,
         this.genreIds,
@@ -30,7 +30,7 @@ class Results {
         this.voteAverage,
         this.voteCount});
 
-  Results.fromJson(dynamic json) {
+  Result.fromJson(dynamic json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     genreIds = json['genre_ids'].cast<int>();

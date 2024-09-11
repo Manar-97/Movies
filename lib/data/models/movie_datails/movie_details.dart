@@ -35,7 +35,7 @@ class MovieDetails {
   num? page;
   num? totalPages;
   num? totalResults;
-  List<Results>? results;
+  List<Result>? results;
   num? statusCode;
   String? backdropPath;
   dynamic belongsToCollection;
@@ -99,7 +99,7 @@ class MovieDetails {
     if (json['results'] != null) {
       results = [];
       json['results'].forEach((v) {
-        results?.add(Results.fromJson(v));
+        results?.add(Result.fromJson(v));
       });
     }
     page = json['page'];
