@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/data/models/movie_datails/result_model.dart';
 import 'package:movies/ui/screens/movie_details/movie_details_screen.dart';
+import 'package:movies/ui/widgets/notification_snack_message.dart';
 
 typedef callback = void Function();
 
@@ -62,7 +63,7 @@ class _RecommendedItemState extends State<RecommendedItem> {
                       child: InkWell(
                           onTap: () {
                             widget.add();
-                            print("${widget.movie.title} added to watchList");
+                            showSnackMessage("${widget.movie.title} added to watchList",context);
                             setState(() {
                               _changeImage();
                             });

@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/data/models/movie_datails/result_model.dart';
 import 'package:movies/ui/screens/movie_details/movie_details_screen.dart';
+import 'package:movies/ui/widgets/notification_snack_message.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 typedef callback = void Function();
 
@@ -15,7 +17,14 @@ class NewReleaseItem extends StatefulWidget {
 }
 
 class _NewReleaseItemState extends State<NewReleaseItem> {
-  bool _isAdd = true;
+  static bool _isAddedToWatchlist = false;
+
+  @override
+  void initState() {
+    _loadChangeImage();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     String posterPath =
@@ -46,22 +55,30 @@ class _NewReleaseItemState extends State<NewReleaseItem> {
                 )),
                 child: InkWell(
                     onTap: () {
+                      widget.add();
+                      showSnackMessage(
+                          "${widget.movie.title} added to watchList", context);
                       setState(() {
-                        widget.add();
-                        print("${widget.movie.title} added to watchList");
-                        _changeImage();
+                        _isAddedToWatchlist = !_isAddedToWatchlist;
+                        _saveChangeImage();
                       });
                     },
-                    child: _isAdd
-                        ? Image.asset("assets/add.png")
-                        : Image.asset("assets/added.png")));
+                    child: _isAddedToWatchlist
+                        ? Image.asset("assets/added.png")
+                        : Image.asset("assets/add.png")));
           },
         ));
   }
 
-  void _changeImage() {
+  void _saveChangeImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isAddedToWatchlist', _isAddedToWatchlist);
+  }
+
+  void _loadChangeImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _isAdd = !_isAdd;
+      _isAddedToWatchlist = prefs.getBool('isAddedToWatchlist') ?? false;
     });
   }
 }

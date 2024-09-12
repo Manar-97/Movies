@@ -17,7 +17,9 @@ class LocalStorage {
     try {
       SharedPreferences init = await SharedPreferences.getInstance();
       await init.setString(filmKey, json);
-    } catch (e) {}
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future<WatchListMovies> getMovies() async {

@@ -17,11 +17,11 @@ class _MyHomeState extends State<MyHome> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    List<Widget> tabs = const [
-      Home(),
+    List<Widget> tabs =  [
+      const Home(),
       Search(),
-      Browse(),
-      WatchList(),
+      const Browse(),
+      const WatchList(),
     ];
     return SafeArea(
       child: Scaffold(

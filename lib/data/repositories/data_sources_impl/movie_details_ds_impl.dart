@@ -21,4 +21,9 @@ class MovieDetailsDSImpl extends MovieDetailsDS{
   Future<void> addToLocal(Result movie) async {
     return await storage.addList(movie);
   }
+
+  @override
+   void deleteFromLocal()  {
+    return  storage.delete();
+  }
 }
