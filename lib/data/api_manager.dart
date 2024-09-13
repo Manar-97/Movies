@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:movies/data/models/movie_category/movie_category.dart';
 import 'package:movies/data/models/movie_datails/movie_details.dart';
 
 @singleton
@@ -95,18 +96,18 @@ class ApiManager {
     }
   }
 
-  // Future<MovieCategory> getCategory() async {
-  //   Uri url = Uri.https(baseUrl, "3/genre/movie/list", {"language": "en_US"});
-  //   var serverResponse =
-  //       await http.get(url,headers: headers);
-  //   if (serverResponse.statusCode >= 200 && serverResponse.statusCode < 300) {
-  //     Map json = jsonDecode(serverResponse.body) as Map;
-  //     MovieCategory results = MovieCategory.fromJson(json);
-  //     return results;
-  //   } else {
-  //     throw "Something went wrong please try again later";
-  //   }
-  // }
+  static Future<MovieCategory> getCategory() async {
+    Uri url = Uri.https(baseUrl, "3/genre/movie/list", {"language": "en_US"});
+    var serverResponse =
+        await http.get(url,headers: headers);
+    if (serverResponse.statusCode >= 200 && serverResponse.statusCode < 300) {
+      Map json = jsonDecode(serverResponse.body) as Map;
+      MovieCategory results = MovieCategory.fromJson(json);
+      return results;
+    } else {
+      throw "Something went wrong please try again later";
+    }
+  }
 
   Future<MovieDetails> getGenereMovie(num id) async {
     Uri url = Uri.https(baseUrl, "/3/discover/movie", {
